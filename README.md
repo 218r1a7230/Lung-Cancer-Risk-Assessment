@@ -7,12 +7,6 @@ This project uses a Random Forest Classifier to predict the risk of lung cancer 
 - [Introduction](#introduction)
 - [Dataset](#dataset)
 - [Model](#model)
-- [Installation](#installation)
-- [How to Run](#how-to-run)
-- [Evaluation](#evaluation)
-- [Contributing](#contributing) (Optional)
-- [License](#license) (Optional)
-- [Contact](#contact)
 
 ## Introduction
 
