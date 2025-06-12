@@ -1,84 +1,177 @@
-# Lung Cancer Risk Prediction System
+# Lung Cancer Risk Assessment Tool
 
-## Overview
-An AI-powered web application that assesses lung cancer risk based on patient health indicators. The system combines machine learning with a user-friendly interface for medical risk assessment.
+A web-based, AI-powered application to evaluate lung cancer risk based on user-provided health factors. This tool collects 15 inputs via an interactive form, runs a Random Forest classifier in real time, and displays results—including probability, top contributing factors, and model performance metrics—through rich visualizations and recommendations.
 
-## Features
-- **Machine Learning Model**: Random Forest classifier with 94.7% accuracy
-- **Interactive Dashboard**: Real-time risk visualization
-- **Feature Importance**: Shows top contributing factors
-- **Medical Recommendations**: Personalized health suggestions
+---
 
-## Tech Stack
-- **Frontend**: HTML5, CSS3, JavaScript (Chart.js)
-- **Backend**: Python (Flask)
-- **Machine Learning**: scikit-learn (Random Forest)
-- **Data Processing**: pandas, NumPy
+## 📋 Table of Contents
 
-## Installation
+1. [Overview](#overview)
+2. [Key Features](#key-features)
+3. [Architecture & File Structure](#architecture--file-structure)
+4. [Technology Stack](#technology-stack)
+5. [Installation & Setup](#installation--setup)
+6. [Running the Application](#running-the-application)
+7. [API Endpoints](#api-endpoints)
+8. [How It Works](#how-it-works)
+9. [Screenshots](#screenshots)
+10. [Contributing](#contributing)
+11. [License](#license)
+12. [Disclaimer](#disclaimer)
 
-### 1. Clone the repository
+---
+
+## 🔍 Overview
+
+The **Lung Cancer Risk Assessment Tool** uses a lightweight Flask backend and a React-inspired frontend to:
+
+* **Collect**: Ask users for 15 critical health parameters (gender, age, smoking status, symptoms, lifestyle factors).
+* **Predict**: Run a pretrained Random Forest model that outputs a lung cancer risk probability and “Yes/No” classification.
+* **Visualize**: Show model performance (accuracy, precision, recall, F1-score), feature importance bars, a color-coded risk meter, and a list of top contributing factors.
+* **Recommend**: Provide personalized medical guidance based on risk category (Low/High).
+
+All user inputs are validated in the browser before submission. The frontend calls Flask endpoints to fetch metrics, feature importances, and predictions via JSON. The entire UI is responsive and mobile-first.
+
+---
+
+## ✨ Key Features
+
+* **Comprehensive Questionnaire**
+
+  * Collects 15 discrete health inputs: gender, age, smoking, symptoms, lifestyle, and chronic conditions.
+  * Client-side validation ensures completeness and value bounds.
+
+* **Real-Time Prediction**
+
+  * Random Forest classifier served from Flask.
+  * Returns risk label ("YES"/"NO") and probability scores instantly.
+
+* **Detailed Model Insights**
+
+  * Exposes endpoints to retrieve training metrics and feature importances.
+
+* **Interactive Frontend Visualizations**
+
+  * Risk Meter, Bar Charts (Chart.js), Feature Highlight Cards.
+
+* **Responsive, Modern UI**
+
+  * Built with HTML5, CSS3, and Vanilla JS.
+  * Clean, medical-themed design optimized for all devices.
+
+* **Lightweight Deployment**
+
+  * Single-page HTML + Flask backend. No heavy frameworks or build step required.
+
+---
+
+## 📂 Architecture & File Structure
+
+```
+Lung-Cancer-Risk-Assessment/
+├── app.py
+├── requirements.txt
+├── data/
+│   └── survey-lung-cancer.csv
+├── saved_models/
+│   ├── model.pkl
+│   ├── scaler.pkl
+│   ├── label_encoders.pkl
+│   └── metrics.pkl
+├── templates/
+│   └── index.html
+├── train_model.py
+├── LICENSE
+└── README.md
+```
+
+---
+
+## 🔧 Technology Stack
+
+* **Backend**: Python, Flask, scikit-learn, pandas, joblib
+* **Frontend**: HTML5, CSS3, JavaScript, Chart.js, Font Awesome
+* **Modeling**: Random Forest, GridSearchCV, Label Encoding, StandardScaler
+
+---
+
+## 🚀 Installation & Setup
+
 ```bash
-git clone https://github.com/yourusername/lung-cancer-prediction.git
-cd lung-cancer-prediction
-2. Set up backend
-bash
-cd backend
+git clone https://github.com/218r1a7230/Lung-Cancer-Risk-Assessment.git
+cd Lung-Cancer-Risk-Assessment
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate
 pip install -r requirements.txt
-python train_and_save.py  # Trains and saves the model
-python app.py  # Starts the Flask server (http://localhost:5000)
-3. Launch frontend
-Open frontend/index.html in any modern browser
+```
 
-Project Structure
-lung-cancer-app/
-├── backend/                  # Flask API and ML model
-│   ├── app.py                # Flask server
-│   ├── train_and_save.py     # Model training script
-│   ├── requirements.txt      # Python dependencies
-│   └── *.pkl                 # Model artifacts
-├── frontend/                 # User interface
-│   └── index.html            # Complete web interface
-└── README.md                 # This documentation
-Usage
-Fill out the patient information form
+To retrain the model (optional):
 
-Click "Assess Lung Cancer Risk"
+```bash
+python train_model.py
+```
 
-View your personalized:
+---
 
-Risk level (Low/High)
+## ▶️ Running the Application
 
-Probability percentage
+```bash
+python app.py
+```
 
-Key contributing factors
+Then open your browser at: `http://127.0.0.1:5000/`
 
-Medical recommendations
+---
 
-Screenshots
-[Add your screenshot descriptions here]
+## 🔍 API Endpoints
 
-Main Interface: Shows input form and model metrics
+* `GET /` → Serves HTML UI
+* `POST /predict` → Returns prediction, probability, and encoded features
+* `GET /metrics` → Returns model metrics JSON
+* `GET /feature_importance` → Returns feature importance scores
+* `GET /health` → Health check
 
-Results Page: Displays risk assessment with visualizations
+---
 
-Model Performance
-Accuracy: 94.7%
+## ✨ How It Works
 
-Precision: 0.95
+* Inputs are encoded and scaled using saved encoders/scalers
+* Model predicts class and probability
+* Frontend displays:
 
-Recall: 0.93
+  * Risk percentage
+  * Risk classification (YES/NO)
+  * Visual charts (risk meter, feature importances, metrics)
+  * Top contributing health factors
+  * Personalized recommendations
 
-F1-Score: 0.94
+---
 
-Future Enhancements
-User authentication
+## 🖼️ Screenshots
 
-Prediction history tracking
+![Screenshot 2025-06-03 215247](https://github.com/user-attachments/assets/bec23f44-6a09-40cb-9d7d-53b7f86d68ca)
 
-Multi-language support
+![image](https://github.com/user-attachments/assets/f1294d65-4690-44b2-96e4-528d2549e09e)
 
-Disclaimer
-This tool is not a substitute for professional medical advice. Always consult a healthcare provider for medical decisions.
 
-Developed by [Your Name] - [Your Email/Portfolio]
+---
+
+## 👍 Contributing
+
+1. Fork this repository
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "Add your message"`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Submit a pull request
+
+---
+
+## 📜 License
+
+MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## ⚠️ Disclaimer
+
+This tool is intended for informational purposes only and **does not constitute medical advice**. Always consult a qualified healthcare provider for diagnosis or treatment.
